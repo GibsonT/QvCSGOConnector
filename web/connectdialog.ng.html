@@ -7,16 +7,17 @@
 
 		<div class="main">
 			<input type="text" ng-model="name" placeholder="Connection name" />
-			<input type="text" ng-model="username" placeholder="Username" />
-			<input type="password" ng-model="password" placeholder="Password" />
+			<input type="text" ng-model="directory" placeholder="Directory" />
+			<!--<input type="password" ng-model="password" placeholder="Password" />-->
 		</div>
 
 		<div class="connectionInfo" ng-class="{'success': connectionSuccessful}">{{connectionInfo}}</div>
 
 		<div class="footer">
 			<button ng-click="onCancelClicked()">Cancel</button>
-			<button ng-click="onTestConnectionClicked()">Test Connection</button>
-			<button ng-click="onOKClicked()" ng-disabled="!isOkEnabled()" q-translation="{{saveButtonText}}"></button>
+			<button ng-click="onOKClicked()" q-translation="{{saveButtonText}}"></button>
+			<!--<button ng-click="onTestConnectionClicked()">Test Connection</button>-->
+			<!--<button ng-click="onOKClicked()" ng-disabled="!isOkEnabled()" q-translation="{{saveButtonText}}"></button>-->
 		</div>
 	</div>
 </div>
