@@ -25,11 +25,12 @@ namespace QvCSGOConnector {
              * below
              */
 
-            string provider, host, username, password;
+            string provider, host, username, password, directory;
             connection.MParameters.TryGetValue("provider", out provider); // Set to the name of the connector by QlikView Engine
             connection.MParameters.TryGetValue("userid", out username); // Set when creating new connection or from inside the QlikView Management Console (QMC)
             connection.MParameters.TryGetValue("password", out password); // Same as for username
             connection.MParameters.TryGetValue("host", out host); // Defined when calling createNewConnection in connectdialog.js
+            connection.MParameters.TryGetValue("directory", out directory);
 
             switch (method)
             {
@@ -55,7 +56,8 @@ namespace QvCSGOConnector {
             return ToJson(response);    // serializes response into JSON string
         }
         public bool verifyCredentials (string username, string password) {
-            return (username == "sdk-user" && password == "sdk-password") || (username == "try" && password == "me");
+            //return (username == "sdk-user" && password == "sdk-password") || (username == "try" && password == "me");
+            return true;
         }
 
         public QvDataContractResponse getInfo()
@@ -74,7 +76,7 @@ namespace QvCSGOConnector {
                 {
                     qDatabases = new Database[]
                     {
-                        new Database {qName = "Windows Event Log"}
+                        new Database {qName = "Demo Files"}
                     }
                 };
             }
