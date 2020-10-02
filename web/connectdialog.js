@@ -8,16 +8,17 @@
 			function init() {
 				$scope.isEdit = input.editMode;
 				$scope.id = input.instanceId;
-				$scope.titleText = $scope.isEdit ? "Change QV Event Log connection" : "Add QV Event Log connection";
+				$scope.titleText = $scope.isEdit ? "Change CS:GO Match Data connection" : "Add CS:GO Match Data connection";
 				$scope.saveButtonText = $scope.isEdit ? "Save changes" : "Create";
 
 				$scope.name = "";
 				$scope.username = "";
 				$scope.password = "";
 				$scope.provider = "QvCSGOConnector.exe"; // Connector filename
+				$scope.directory = "";
 				$scope.connectionInfo = "";
 				$scope.connectionSuccessful = false;
-				$scope.connectionString = createCustomConnectionString($scope.provider, "host=localhost;");
+				$scope.connectionString = createCustomConnectionString($scope.provider, "host=localhost;directory=" + $scope.directory);
 
 				input.serverside.sendJsonRequest( "getInfo" ).then( function ( info ) {
 					$scope.info = info.qMessage;
@@ -34,11 +35,15 @@
 			/* Event handlers */
 
 			$scope.onOKClicked = function () {
+				console.log('NAME: ' + $scope.name);
+				console.log('DIRECTORY: ' + $scope.directory);
+
 				if ( $scope.isEdit ) {
 					var overrideCredentials = ( $scope.username !== "" && $scope.password !== "" );
 					input.serverside.modifyConnection( $scope.id,
 						$scope.name,
-						$scope.connectionString,
+						//$scope.connectionString,
+						createCustomConnectionString($scope.provider, "host=localhost;directory=" + $scope.directory),
 						$scope.provider,
 						overrideCredentials,
 						$scope.username,
@@ -48,7 +53,7 @@
 							}
 						} );
 				} else {
-					input.serverside.createNewConnection( $scope.name, $scope.connectionString, $scope.username, $scope.password);
+					input.serverside.createNewConnection( $scope.name, createCustomConnectionString($scope.provider, "host=localhost;directory=" + $scope.directory), $scope.username, $scope.password);
 					$scope.destroyComponent();
 				}
 			};
@@ -72,7 +77,7 @@
 			/* Helper functions */
 
 			function createCustomConnectionString ( filename, connectionstring ) {
-				return "CUSTOM CONNECT TO " + "\"provider=" + filename + ";" + connectionstring + "\"";
+				return "CUSTOM CONNECT TO " + "\"provider=" + filename + ";" + connectionstring + ";\"";
 			}
 
 
